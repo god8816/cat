@@ -61,10 +61,10 @@ Cat
 [Document Support](http://note.youdao.com/noteshare?id=0a11948424121449a5ec8a6c5e8507d4)
 
 # QQ Group Support
-  QQ NUM：810268021
+  QQ num：810268021
 
 # QQ Me Support
-  QQ NUM：948351520
+  QQ num：948351520
   
  
 
