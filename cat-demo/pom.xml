@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>cat-demo</artifactId>
+    <groupId>org.zoo</groupId>
+    <version>1.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.21.RELEASE</version>
+        <relativePath/>
+    </parent>
+    <modules>
+        <module>cat-demo-dubbo</module>
+        <module>cat-demo-springcloud</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jdk.version>1.8</jdk.version>
+        <cat.version>1.0.1-SNAPSHOT</cat.version>
+        <spring-cloud.version>Dalston.SR1</spring-cloud.version>
+        <springfox.version>2.6.1</springfox.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.zoo</groupId>
+                <artifactId>cat-annotation</artifactId>
+                <version>${cat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.zoo</groupId>
+                <artifactId>cat-core</artifactId>
+                <version>${cat.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.zoo</groupId>
+                <artifactId>cat-dubbo</artifactId>
+                <version>${cat.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.zoo</groupId>
+                <artifactId>cat-springcloud</artifactId>
+                <version>${cat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.zoo</groupId>
+                <artifactId>cat-spring-boot-starter-dubbo</artifactId>
+                <version>${cat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.zoo</groupId>
+                <artifactId>cat-spring-boot-starter-springcloud</artifactId>
+                <version>${cat.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-bean-validators</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

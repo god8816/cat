@@ -1,0 +1,23 @@
+server:
+   port: 8888
+   servlet:
+     context-path: /cat-admin
+
+spring:
+   application:
+      name: cat-admin
+   profiles:
+     active: db
+
+cat:
+  admin :
+    userName : admin
+    password : admin
+
+compensation:
+   application:
+      list : undo_log
+   serializer :
+      support: kryo
+   retry :
+      max: 10

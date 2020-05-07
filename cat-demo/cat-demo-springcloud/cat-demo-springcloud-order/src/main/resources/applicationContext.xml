@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
+       default-autowire="byName">
+
+    <context:component-scan base-package="org.zoo.cat.*"/>
+    <aop:aspectj-autoproxy expose-proxy="true"/>
+    <bean id="catTransactionBootstrap" class="org.zoo.cat.core.bootstrap.CatTransactionBootstrap">
+         <property name="serializer" value="kryo"/>
+         <property name="recoverDelayTime" value="10"/>
+         <property name="retryMax" value="30"/>
+         <property name="scheduledDelay" value="2"/>
+         <property name="scheduledThreadMax" value="4"/>
+         <property name="scheduledInitDelay" value="2"/>
+         <property name="repositorySupport" value="db"/>
+         <property name="asyncThreads" value="200"/>
+         <property name="started" value="true"/>
+         <property name="catNoticeSafeConfig">
+             <bean class="org.zoo.cat.common.config.CatNoticeSafeConfig">
+                 <property name="noticeScheduledDelay" value="1"/>
+                 <property name="timesMinute" value="10"/>
+             </bean>
+         </property>
+         <property name="catLogConfig">
+             <bean class="org.zoo.cat.common.config.CatLogConfig">
+                 <property name="scheduledLogDelay" value="100000000"/>
+             </bean>
+         </property>
+         <property name="catDbConfig">
+             <bean class="org.zoo.cat.common.config.CatDbConfig">
+                 <property name="url" value="jdbc:mysql://127.0.0.1:3306/soul-open?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=GMT&amp;failOverReadOnly=false&amp;autoReconnect=true"/>
+                 <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+                 <property name="username" value="root"/>
+                 <property name="password" value="root"/>
+             </bean>
+         </property>
+
+    </bean>
+
+    <!--<bean id="catConfig" class="org.zoo.cat.common.config.CatConfig">
+        <property name="serializer" value="kryo"/>
+        <property name="recoverDelayTime" value="120"/>
+        <property name="retryMax" value="30"/>
+        <property name="scheduledDelay" value="120"/>
+        <property name="scheduledThreadMax" value="4"/>
+        <property name="repositorySupport" value="db"/>
+        <property name="asyncThreads" value="200"/>
+        <property name="started" value="true"/>
+        <property name="catDbConfig">
+            <bean class="org.zoo.cat.common.config.CatDbConfig">
+                <property name="url"
+                          value="jdbc:mysql://127.0.0.1:3306/soul-open?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=GMT&amp;failOverReadOnly=false&amp;autoReconnect=true"/>
+                <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </bean>
+        </property>
+
+    </bean>-->
+
+    <!--
+       <property name="repositorySupport" value="db" />
+        <property name="catDbConfig">
+            <bean class="org.zoo.cat.common.config.CatDbConfig">
+                <property name="url"
+                          value="jdbc:mysql://192.168.1.68:3306/cat?useUnicode=true&amp;characterEncoding=utf8"/>
+                <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+                <property name="password" value="Wgj@555888"/>
+                <property name="username" value="xiaoyu"/>
+            </bean>
+        </property>
+
+
+       <property name="repositorySupport" value="redis" />
+        <property name="catRedisConfig">
+            <bean class="org.zoo.cat.common.config.CatRedisConfig">
+                <property name="hostName"
+                          value="192.168.1.68"/>
+                <property name="port" value="6379"/>
+                <property name="password" value=""/>
+            </bean>
+        </property>
+
+        <property name="repositorySupport" value="zookeeper"/>
+        <property name="catZookeeperConfig">
+            <bean class="org.zoo.cat.common.config.CatZookeeperConfig">
+                <property name="host"  value="192.168.1.73:2181"/>
+                <property name="sessionTimeOut" value="100000"/>
+                <property name="rootPath" value="/cat"/>
+            </bean>
+        </property>
+
+
+       <property name="repositorySupport" value="mongodb"/>
+        <property name="catMongoConfig">
+            <bean class="org.zoo.cat.common.config.CatMongoConfig">
+                <property name="mongoDbUrl"  value="192.168.1.68:27017"/>
+                <property name="mongoDbName" value="happylife"/>
+                <property name="mongoUserName" value="xiaoyu"/>
+                <property name="mongoUserPwd" value="123456"/>
+            </bean>
+        </property>
+
+
+        <property name="repositorySupport" value="file"/>
+        <property name="catFileConfig">
+            <bean class="org.zoo.cat.common.config.CatFileConfig">
+                <property name="path"  value="/account"/>
+                <property name="prefix" value="account"/>
+            </bean>
+        </property>
+
+
+     -->
+</beans>

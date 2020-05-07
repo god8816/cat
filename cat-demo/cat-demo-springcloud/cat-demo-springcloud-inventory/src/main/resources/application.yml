@@ -1,0 +1,44 @@
+server:
+  port: 8883
+  address: 0.0.0.0
+  servlet:
+    context-path: inventory-service
+
+spring:
+    main:
+        allow-bean-definition-overriding: true
+    datasource:
+        driver-class-name:  com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/tcc_stock?useUnicode=true&characterEncoding=utf8
+        username: root
+        password: root
+    application:
+      name: inventory-service
+      
+                                
+mybatis:
+  type-aliases-package: com.zoo.cat.demo.springcloud.inventory.entity
+  config-location: classpath:mybatis/mybatis-config.xml
+#${random.int[9000,9999]}
+eureka:
+ client:
+     serviceUrl:
+       defaultZone: http://eureka-test-1.idc.yst.com.cn:8080/eureka/
+ instance:
+   prefer-ip-address: true
+
+inventory-service :
+   ribbon.NFLoadBalancerRuleClassName : com.netflix.loadbalancer.RandomRule
+
+logging:
+    level:
+        root: error
+        org.springframework.web: info
+        org.apache.ibatis: info
+        org.zoo.cat.bonuspoint: debug
+        org.zoo.cat.lottery: debug
+        org.zoo.cat: debug
+        io.netty: info
+    path: "./logs"
+
+

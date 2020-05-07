@@ -1,0 +1,70 @@
+server:
+  port: 8084
+  servlet:
+    context-path: /
+  address: 0.0.0.0
+spring:
+    datasource:
+        driver-class-name:  com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/tcc_account?useUnicode=true&characterEncoding=utf8
+        username: root
+        password: root
+org:
+    zoo:
+         cat :
+            serializer : kryo
+            recoverDelayTime : 128
+            retryMax : 30
+            scheduledDelay : 128
+            scheduledThreadMax :  10
+            repositorySupport : db
+            started: false
+            catDbConfig :
+                 driverClassName  : com.mysql.jdbc.Driver
+                 url :  jdbc:mysql://127.0.0.1:3306/tcc?useUnicode=true&characterEncoding=utf8
+                 username : root
+                 password : root
+
+
+
+#            repository-support: file
+#            cat-file-config:
+#                     path      : /account
+#                     prefix    :  account
+#
+
+#           repository-support:  mongodb
+#           cat-mongo-config:
+#               mongoDbUrl  : 192.168.1.68:27017
+#               mongoDbName  :  happylife
+#               mongoUserName  : xiaoyu
+#               mongoUserPwd   : 123456
+
+
+#           repository-support: zookeeper
+#           cat-zookeeper-config:
+#                    host      : 92.168.1.73:2181
+#                    sessionTimeOut      :  100000
+#                    rootPath  : /tcc
+
+#            repository-support: redis
+#            cat-redis-config:
+#                 masterName: mymaster
+#                 sentinel : true
+#                 sentinelUrl : 192.168.1.91:26379;192.168.1.92:26379;192.168.1.93:26379
+#                 password  : foobaredbbexONE123
+
+mybatis:
+  type-aliases-package: com.cat.tcc.demo.dubbo.account.api.entity
+  config-location: classpath:mybatis/mybatis-config.xml
+
+logging:
+    level:
+        root: error
+        org.springframework.web: info
+        org.apache.ibatis: debug
+        org.zoo.cat.bonuspoint: debug
+        org.zoo.cat.lottery: debug
+        org.zoo.cat: debug
+    path: "./logs"
+

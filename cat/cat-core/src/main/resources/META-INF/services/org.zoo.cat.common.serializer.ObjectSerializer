@@ -1,0 +1,4 @@
+org.zoo.cat.common.serializer.KryoSerializer
+org.zoo.cat.common.serializer.ProtostuffSerializer
+org.zoo.cat.common.serializer.HessianSerializer
+org.zoo.cat.common.serializer.JavaSerializer
