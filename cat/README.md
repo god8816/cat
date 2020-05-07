@@ -61,10 +61,10 @@ Cat
 [Document Support](http://note.youdao.com/noteshare?id=0a11948424121449a5ec8a6c5e8507d4)
 
 # QQ Group Support
-<img alt="QQ群扫码加群" src="https://god8816.github.io/cat/cat_qq_group.JPG" height="300" width="300"/>  
+  QQ NUM：810268021
 
 # QQ Me Support
-<img alt="私人QQ" src="https://god8816.github.io/cat/cat_qq_me.JPG" height="240" width="240"/>
+  QQ NUM：948351520
   
  
 
