@@ -340,7 +340,7 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
 
 	@Override
 	public List<CatNoticeSafe> countLogsByDelay(Date date,String timeUnit) {
-		String sb = "select  count(id) as num, target_method,target_class from cat_undo_log  where trans_type='notice' and create_time > ? group by target_method,target_class"; 
+		String sb = "select  count(id) as num, target_method,target_class from "+tableName+"  where trans_type='notice' and create_time > ? group by target_method,target_class"; 
         List<Map<String, Object>> list = executeQuery(sb, date);
         if (CollectionUtils.isNotEmpty(list)) {
              List<CatNoticeSafe> catNoticeSafeList = new ArrayList<>();
