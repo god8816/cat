@@ -57,7 +57,7 @@ public class CatZoneAwareLoadBalancer extends ZoneAvoidanceRule {
 
         final String transId = catTransactionContext.getTransId();
         //if try
-        if (catTransactionContext.getAction() == CatActionEnum.TRYING.getCode()) {
+        if (catTransactionContext.getAction() == CatActionEnum.TRYING.getCode() || catTransactionContext.getAction() == CatActionEnum.NOTICEING.getCode()) {
             SERVER_MAP.put(transId, server);
             return server;
         }

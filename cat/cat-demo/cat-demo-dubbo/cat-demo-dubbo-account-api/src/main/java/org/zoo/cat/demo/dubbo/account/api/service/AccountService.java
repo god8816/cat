@@ -57,5 +57,6 @@ public interface AccountService {
      * @param userId 用户id
      * @return AccountDO
      */
+    @Cat(retryMax=10,timeoutMills=2000,pattern = TransTypeEnum.NOTICE)
     AccountDO findByUserId(String userId);
 }

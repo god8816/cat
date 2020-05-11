@@ -117,6 +117,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Cat(retryMax=10,timeoutMills=2000,pattern = TransTypeEnum.NOTICE)
     public AccountDO findByUserId(String userId) {
         //获取事务ID
     	    System.out.println(123);

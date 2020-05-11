@@ -21,6 +21,7 @@
             <artifactId>cat-demo-dubbo-inventory-api</artifactId>
         </dependency>
 
+        <!--cat配置-->
         <dependency>
             <groupId>org.zoo</groupId>
             <artifactId>cat-demo-dubbo-account-api</artifactId>

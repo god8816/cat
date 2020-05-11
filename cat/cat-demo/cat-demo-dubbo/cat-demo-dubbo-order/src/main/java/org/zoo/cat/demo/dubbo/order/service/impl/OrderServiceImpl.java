@@ -26,6 +26,7 @@ import org.zoo.cat.annotation.Cat;
 import org.zoo.cat.annotation.TransTypeEnum;
 import org.zoo.cat.common.exception.CatException;
 import org.zoo.cat.common.utils.IdWorkerUtils;
+import org.zoo.cat.demo.dubbo.account.api.service.AccountService;
 import org.zoo.cat.demo.dubbo.order.entity.Order;
 import org.zoo.cat.demo.dubbo.order.enums.OrderStatusEnum;
 import org.zoo.cat.demo.dubbo.order.mapper.OrderMapper;
@@ -51,6 +52,9 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
 
     private final PaymentService paymentService;
+    
+    @Autowired
+    private AccountService accountService;
 
     @Autowired(required = false)
     public OrderServiceImpl(OrderMapper orderMapper,
@@ -186,12 +190,8 @@ public class OrderServiceImpl implements OrderService {
 	@Cat(retryMax=10,timeoutMills=2000,pattern = TransTypeEnum.NOTICE)
 	public String createOrderTimeOut(Integer orderId) {
 	    final Order order = buildOrder(orderId);
-	    //等待5秒模拟超时场景
-	    try {
-			Thread.sleep(5*1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+	    
+	    accountService.findByUserId("1");
 	    
 	    final int rows = orderMapper.save(order);
 	    if(rows>0)
