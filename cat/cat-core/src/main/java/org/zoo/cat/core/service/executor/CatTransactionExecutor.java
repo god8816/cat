@@ -104,6 +104,30 @@ public class CatTransactionExecutor {
         CatTransactionContextLocal.getInstance().set(context);
         return catTransaction;
     }
+    
+    /**
+     * transaction preTry.
+     *
+     * @param point cut point.
+     * @return TccTransaction cat transaction
+     */
+    public CatTransaction preTryNotice(final ProceedingJoinPoint point) {
+        LogUtil.debug(LOGGER, () -> "......cat transaction starter....");
+        //build noticeTransaction
+        final CatTransaction catTransaction = buildCatTransaction(point, CatRoleEnum.START.getCode(), null);
+        //save noticeTransaction in threadLocal
+        CURRENT.set(catTransaction);
+        //publishEvent
+        catTransactionEventPublisher.publishEvent(catTransaction, EventTypeEnum.SAVE.getCode());
+        //set TccTransactionContext this context transfer remote
+        CatTransactionContext context = new CatTransactionContext();
+        //set action is notice
+        context.setAction(CatActionEnum.NOTICEING.getCode());
+        context.setTransId(catTransaction.getTransId());
+        context.setRole(CatRoleEnum.START.getCode());
+        CatTransactionContextLocal.getInstance().set(context);
+        return catTransaction;
+    }
 
     /**
      * this is Participant transaction preTry.

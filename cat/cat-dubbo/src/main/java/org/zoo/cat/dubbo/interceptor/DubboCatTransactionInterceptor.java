@@ -32,7 +32,7 @@ import java.util.Objects;
 /**
  * The DubboCatTransactionInterceptor.
  *
- * @author xiaoyu
+ * @author dzc
  */
 @Component
 public class DubboCatTransactionInterceptor implements CatTransactionInterceptor {

@@ -65,7 +65,7 @@ public class StarterNoticeTransactionHandler implements CatTransactionHandler, S
     public Object handler(final ProceedingJoinPoint point, final CatTransactionContext context) throws Throwable {
         Object returnValue;
         try {
-            CatTransaction catTransaction = catTransactionExecutor.preTry(point);
+            CatTransaction catTransaction = catTransactionExecutor.preTryNotice(point);
             try {
                 //execute try
              	Long startTime = System.currentTimeMillis();
