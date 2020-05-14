@@ -46,9 +46,10 @@ public class CatCoordinatorServiceImpl implements CatCoordinatorService {
 
     @Override
     public void start(final CatConfig catConfig) {
-        final String repositorySuffix = buildRepositorySuffix(catConfig.getRepositorySuffix());
+        final String tableName = buildRepositorySuffix(catConfig.getRepositorySuffix());
+        final String appName = catApplicationService.acquireName();
         coordinatorRepository = SpringBeanUtils.getInstance().getBean(CatCoordinatorRepository.class);
-        coordinatorRepository.init(repositorySuffix, catConfig);
+        coordinatorRepository.init(tableName,appName, catConfig);
     }
 
     @Override

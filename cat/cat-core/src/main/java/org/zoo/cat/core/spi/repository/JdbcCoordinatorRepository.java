@@ -59,7 +59,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
- * jdbc impl.
+ * jdbc impl .
  *
  * @author dzc
  */
@@ -72,6 +72,8 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(JdbcCoordinatorRepository.class);
 
     private DataSource dataSource;
+    
+    private String appName;
 
     private String tableName;
 
@@ -86,12 +88,12 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
 
     @Override
     public int create(final CatTransaction catTransaction) {
-        String sql = "insert into " + tableName + "(id,trans_id,trans_type,target_class,target_method,retry_max,retried_count,"
+        String sql = "insert into " + tableName + "(id,app_name,trans_id,trans_type,target_class,target_method,retry_max,retried_count,"
                 + "create_time,last_time,version,status,invocation,role,pattern,confirm_method,cancel_method)"
-                + " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                + " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             final byte[] serialize = serializer.serialize(catTransaction.getCatParticipants());
-            return executeUpdate(sql,catTransaction.getId(),catTransaction.getTransId(),catTransaction.getTransType(), catTransaction.getTargetClass(), catTransaction.getTargetMethod(),
+            return executeUpdate(sql,catTransaction.getId(),appName,catTransaction.getTransId(),catTransaction.getTransType(), catTransaction.getTargetClass(), catTransaction.getTargetMethod(),
             		    catTransaction.getRetryMax(),catTransaction.getRetriedCount(), catTransaction.getCreateTime(), catTransaction.getLastTime(),
                     catTransaction.getVersion(), catTransaction.getStatus(), serialize, catTransaction.getRole(),
                     catTransaction.getPattern(), catTransaction.getConfirmMethod(), catTransaction.getCancelMethod());
@@ -103,7 +105,7 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
 
     @Override
     public int remove(final String id) {
-        String sql = "delete from " + tableName + " where trans_id = ? ";
+        String sql = "delete from " + tableName + " where trans_id = ? and app_name='"+appName+"'";
         return executeUpdate(sql, id);
     }
 
@@ -113,7 +115,7 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
         catTransaction.setLastTime(new Date());
         catTransaction.setVersion(catTransaction.getVersion() + 1);
         String sql = "update " + tableName
-                + " set last_time = ?,version =?,retried_count =?,invocation=?,status=? ,pattern=? where trans_id = ? and version=? ";
+                + " set last_time = ?,version =?,retried_count =?,invocation=?,status=? ,pattern=? where trans_id = ? and version=? and app_name='"+appName+"'";
         try {
             final byte[] serialize = serializer.serialize(catTransaction.getCatParticipants());
             return executeUpdate(sql, catTransaction.getLastTime(),
@@ -128,7 +130,7 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
 
     @Override
     public int updateParticipant(final CatTransaction catTransaction) {
-        String sql = "update " + tableName + " set invocation=?  where trans_id = ?  ";
+        String sql = "update " + tableName + " set invocation=?  where trans_id = ?  and app_name='"+appName+"'";
         try {
             final byte[] serialize = serializer.serialize(catTransaction.getCatParticipants());
             return executeUpdate(sql, serialize, catTransaction.getTransId());
@@ -140,13 +142,13 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
 
     @Override
     public int updateStatus(final String id, final Integer status) {
-        String sql = "update " + tableName + " set status=?  where trans_id = ?  ";
+        String sql = "update " + tableName + " set status=?  where trans_id = ? and app_name='"+appName+"'";
         return executeUpdate(sql, status, id);
     }
 
     @Override
     public CatTransaction findById(final String id) {
-        String selectSql = "select * from " + tableName + " where trans_id=?";
+        String selectSql = "select * from " + tableName + " where trans_id=? and app_name='"+appName+"'";
         List<Map<String, Object>> list = executeQuery(selectSql, id);
         if (CollectionUtils.isNotEmpty(list)) {
             return list.stream()
@@ -159,7 +161,7 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
 
     @Override
     public List<CatTransaction> listAll() {
-        String selectSql = "select * from " + tableName;
+        String selectSql = "select * from " + tableName + " where app_name='"+appName+"'";
         List<Map<String, Object>> list = executeQuery(selectSql);
         if (CollectionUtils.isNotEmpty(list)) {
             return list.stream()
@@ -172,7 +174,7 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
 
     @Override
     public List<CatTransaction> listAllByDelay(final Date date) {
-        String sb = "select * from " + tableName + " where last_time <? and retried_count<retry_max";
+        String sb = "select * from " + tableName + " where app_name='"+appName+"' and last_time <? and retried_count<retry_max";
         List<Map<String, Object>> list = executeQuery(sb, date);
         if (CollectionUtils.isNotEmpty(list)) {
             return list.stream().filter(Objects::nonNull)
@@ -186,6 +188,7 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
     private CatTransaction buildByResultMap(final Map<String, Object> map) {
         CatTransaction catTransaction = new CatTransaction();
         catTransaction.setId((Long) map.get("id"));
+        catTransaction.setAppName((String) map.get("app_name"));
         catTransaction.setTransId((String) map.get("trans_id"));
         catTransaction.setTransType((String) map.get("trans_type"));
         catTransaction.setRetryMax((Integer) map.get("retry_max"));
@@ -215,7 +218,7 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
     }
 
     @Override
-    public void init(final String modelName, final CatConfig txConfig) {
+    public void init(final String modelName,final String appName, final CatConfig txConfig) {
         try {
             final CatDbConfig catDbConfig = txConfig.getCatDbConfig();
             if (catDbConfig.getDataSource() != null && StringUtils.isBlank(catDbConfig.getUrl())) {
@@ -238,6 +241,7 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
                 dataSource = hikariDataSource;
             }
             this.tableName = RepositoryPathUtils.buildDbTableName(modelName);
+            this.appName = appName;
             //save current database type
             this.currentDBType = DbTypeUtils.buildByDriverClassName(catDbConfig.getDriverClassName());
             executeUpdate(SqlHelper.buildCreateTableSql(catDbConfig.getDriverClassName(), tableName));
@@ -340,7 +344,7 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
 
 	@Override
 	public List<CatNoticeSafe> countLogsByDelay(Date date,String timeUnit) {
-		String sb = "select  count(id) as num, target_method,target_class from "+tableName+"  where trans_type='notice' and create_time > ? group by target_method,target_class"; 
+		String sb = "select  count(id) as num, target_method,target_class from "+tableName+"  where app_name='"+appName+"' and trans_type='notice' and create_time > ? group by target_method,target_class"; 
         List<Map<String, Object>> list = executeQuery(sb, date);
         if (CollectionUtils.isNotEmpty(list)) {
              List<CatNoticeSafe> catNoticeSafeList = new ArrayList<>();
@@ -361,7 +365,7 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
 
 	@Override
 	public int removeLogsByDelay(Date acquireSecondsData) {
-		 String sql = "delete from " + tableName + " where create_time <= ? ";
+		 String sql = "delete from " + tableName + " where app_name='"+appName+"' and create_time <= ? ";
 	     return executeUpdate(sql, acquireSecondsData);
 	}
 	

@@ -105,10 +105,11 @@ public interface CatCoordinatorRepository {
     /**
      * init.
      *
-     * @param modelName modelName
+     * @param tableName tableName
+     * @param appName appName
      * @param catConfig {@linkplain CatConfig}
      */
-    void init(String modelName, CatConfig catConfig);
+    void init(String tableName,String appName, CatConfig catConfig);
 
     /**
      * set scheme.

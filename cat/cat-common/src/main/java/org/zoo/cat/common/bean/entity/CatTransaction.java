@@ -44,6 +44,11 @@ public class CatTransaction implements Serializable {
     private Long id;
     
     /**
+     * appName.
+     */
+    private String appName;
+    
+    /**
      * transaction id.
      */
     private String transId;

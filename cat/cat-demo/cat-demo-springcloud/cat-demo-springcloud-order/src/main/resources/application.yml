@@ -14,7 +14,7 @@ spring:
         username: root
         password: root
     application:
-      name: undo_log
+      name: springcloud_order
 
 mybatis:
   type-aliases-package: org.zoo.cat.demo.springcloud.order.entity

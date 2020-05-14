@@ -159,7 +159,7 @@ public class FileCoordinatorRepository implements CatCoordinatorRepository {
     }
 
     @Override
-    public void init(final String modelName, final CatConfig catConfig) {
+    public void init(final String modelName,final String appName, final CatConfig catConfig) {
         filePath = RepositoryPathUtils.buildFilePath(modelName);
         File file = new File(filePath);
         if (!file.exists()) {

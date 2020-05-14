@@ -55,6 +55,7 @@ public class SqlHelper {
                 tableName +
                 "` (" +
                 "  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'ID'," +
+                "  `app_name` varchar(30) NOT NULL COMMENT '项目名称'," +
                 "  `trans_id` varchar(64) NOT NULL COMMENT '事务ID'," +
                 "  `trans_type` varchar(20) NOT NULL COMMENT '事务类型模式'," +
                 "  `target_class` varchar(256)  COMMENT '目标类'," +
@@ -78,6 +79,7 @@ public class SqlHelper {
                 tableName +
                 "` (" +
                 "  `id` number(20) NOT NULL COMMENT 'ID'," +
+                "  `app_name` varchar(30) NOT NULL COMMENT '项目名称'," +
                 "  `trans_id` varchar(64) NOT NULL COMMENT '事务ID'," +
                 "  `trans_type` varchar(20) NOT NULL COMMENT '事务类型模式'," +
                 "  `target_class` varchar(256)  COMMENT '目标类'," +
@@ -101,6 +103,7 @@ public class SqlHelper {
                 tableName +
                 "` (" +
                 "  `id` BIGINT(20) NOT NULL COMMENT 'ID'," +
+                "  `app_name` varchar(30) NOT NULL COMMENT '项目名称'," +
                 "  `trans_id` varchar(64) NOT NULL COMMENT '事务ID'," +
                 "  `trans_type` varchar(20) NOT NULL COMMENT '事务类型模式'," +
                 "  `target_class` varchar(256)  COMMENT '目标类'," +
@@ -123,6 +126,8 @@ public class SqlHelper {
         return " CREATE TABLE IF NOT EXISTS " +
                 tableName +
                 "(" +
+                "  id BIGINT(20) NOT NULL COMMENT 'ID'," +
+                "  app_name  varchar(30) NOT NULL COMMENT '项目名称'," +
                 "  trans_id       VARCHAR(64) PRIMARY KEY COMMENT '事务ID'," +
                 "  trans_type     varchar(20) NOT NULL COMMENT '事务类型模式'," +
                 "  target_class   VARCHAR(256) COMMENT '目标类'," +

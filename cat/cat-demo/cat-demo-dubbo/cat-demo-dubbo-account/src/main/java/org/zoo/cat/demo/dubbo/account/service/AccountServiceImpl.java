@@ -121,6 +121,12 @@ public class AccountServiceImpl implements AccountService {
     public AccountDO findByUserId(String userId) {
         //获取事务ID
     	    System.out.println(123);
+    	    try {
+				Thread.sleep(50000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         String transId = RootContext.getTransId();
         System.out.println("transId==="+transId);
         return accountMapper.findByUserId(userId);

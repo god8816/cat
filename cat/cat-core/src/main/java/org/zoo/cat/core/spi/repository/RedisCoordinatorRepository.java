@@ -176,7 +176,7 @@ public class RedisCoordinatorRepository implements CatCoordinatorRepository {
     }
 
     @Override
-    public void init(final String modelName, final CatConfig catConfig) {
+    public void init(final String modelName, final String appName,final CatConfig catConfig) {
         keyPrefix = RepositoryPathUtils.buildRedisKeyPrefix(modelName);
         final CatRedisConfig catRedisConfig = catConfig.getCatRedisConfig();
         try {

@@ -183,7 +183,7 @@ public class ZookeeperCoordinatorRepository implements CatCoordinatorRepository 
     }
 
     @Override
-    public void init(final String modelName, final CatConfig catConfig) {
+    public void init(final String modelName,final String appName, final CatConfig catConfig) {
         rootPathPrefix = RepositoryPathUtils.buildZookeeperPathPrefix(modelName);
         try {
             connect(catConfig.getCatZookeeperConfig());

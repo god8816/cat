@@ -213,7 +213,7 @@ public class MongoCoordinatorRepository implements CatCoordinatorRepository {
     }
 
     @Override
-    public void init(final String modelName, final CatConfig catConfig) {
+    public void init(final String modelName,final String appName, final CatConfig catConfig) {
         collectionName = RepositoryPathUtils.buildMongoTableName(modelName);
         final CatMongoConfig catMongoConfig = catConfig.getCatMongoConfig();
         MongoClientFactoryBean clientFactoryBean = buildMongoClientFactoryBean(catMongoConfig);
