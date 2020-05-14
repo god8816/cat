@@ -75,8 +75,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Cat(retryMax=10,pattern = TransTypeEnum.NOTICE)
+    @Cat(retryMax=10,timeoutMills=2000,pattern = TransTypeEnum.NOTICE)
     public AccountDO findByUserId(final String userId) {
+     	//等待5秒模拟超时场景
+	    try {
+			Thread.sleep(5*1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
     	    //获取事务ID
         String transId = RootContext.getTransId();
         LOGGER.info("transId: " + transId);

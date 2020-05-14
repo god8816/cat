@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.zoo.cat.annotation.Cat;
+import org.zoo.cat.annotation.TransTypeEnum;
 
 import com.zoo.cat.demo.springcloud.account.dto.AccountDTO;
 import com.zoo.cat.demo.springcloud.account.service.AccountService;
@@ -49,6 +51,7 @@ public class AccountController {
     }
 
     @RequestMapping("/findByUserId")
+    @Cat(retryMax=10,timeoutMills=2000,pattern = TransTypeEnum.NOTICE)
     public BigDecimal findByUserId(@RequestParam("userId") String userId) {
         return accountService.findByUserId(userId)!=null?accountService.findByUserId(userId).getBalance():new BigDecimal(0);
     }
