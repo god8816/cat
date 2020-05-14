@@ -55,6 +55,7 @@ public interface AccountClient {
      * @return AccountDO big decimal
      */
     @RequestMapping("/account/findByUserId")
+    @Cat(retryMax=10,timeoutMills=2000,pattern = TransTypeEnum.NOTICE)
     BigDecimal findByUserId(@RequestParam("userId") String userId);
 
 }

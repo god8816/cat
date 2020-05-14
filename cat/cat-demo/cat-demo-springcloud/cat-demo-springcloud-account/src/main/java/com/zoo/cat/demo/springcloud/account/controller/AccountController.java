@@ -50,7 +50,7 @@ public class AccountController {
 
     @RequestMapping("/findByUserId")
     public BigDecimal findByUserId(@RequestParam("userId") String userId) {
-        return accountService.findByUserId(userId).getBalance();
+        return accountService.findByUserId(userId)!=null?accountService.findByUserId(userId).getBalance():new BigDecimal(0);
     }
 
 

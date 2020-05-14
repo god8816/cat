@@ -26,6 +26,7 @@ import org.zoo.cat.annotation.TransTypeEnum;
 import org.zoo.cat.common.exception.CatException;
 import org.zoo.cat.common.utils.IdWorkerUtils;
 
+import com.zoo.cat.demo.springcloud.order.client.AccountClient;
 import com.zoo.cat.demo.springcloud.order.entity.Order;
 import com.zoo.cat.demo.springcloud.order.enums.OrderStatusEnum;
 import com.zoo.cat.demo.springcloud.order.mapper.OrderMapper;
@@ -51,6 +52,9 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
 
     private final PaymentService paymentService;
+    
+    @Autowired
+    private AccountClient accountClient;
 
     @Autowired(required = false)
     public OrderServiceImpl(OrderMapper orderMapper, PaymentService paymentService) {
@@ -158,6 +162,9 @@ public class OrderServiceImpl implements OrderService {
 		}
 	    
 	    final int rows = orderMapper.save(order);
+	    
+	    accountClient.findByUserId("1");
+	    
 	    if(rows>0)
 		   return "success";
 	    else

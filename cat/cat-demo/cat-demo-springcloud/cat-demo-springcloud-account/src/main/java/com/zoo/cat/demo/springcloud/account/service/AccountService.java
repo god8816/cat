@@ -45,5 +45,6 @@ public interface AccountService {
      * @param userId 用户id
      * @return AccountDO
      */
+    @Cat(retryMax=10,pattern = TransTypeEnum.NOTICE)
     AccountDO findByUserId(String userId);
 }

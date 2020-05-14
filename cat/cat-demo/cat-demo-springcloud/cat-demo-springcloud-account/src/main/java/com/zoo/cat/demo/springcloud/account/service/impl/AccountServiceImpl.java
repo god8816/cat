@@ -75,6 +75,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Cat(retryMax=10,pattern = TransTypeEnum.NOTICE)
     public AccountDO findByUserId(final String userId) {
     	    //获取事务ID
         String transId = RootContext.getTransId();
