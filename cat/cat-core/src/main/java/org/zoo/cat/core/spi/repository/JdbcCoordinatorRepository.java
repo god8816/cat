@@ -365,7 +365,7 @@ public class JdbcCoordinatorRepository implements CatCoordinatorRepository {
 
 	@Override
 	public int removeLogsByDelay(Date acquireSecondsData) {
-		 String sql = "delete from " + tableName + " where app_name='"+appName+"' and create_time <= ? ";
+		 String sql = "delete from " + tableName + " where  create_time <= ? ";
 	     return executeUpdate(sql, acquireSecondsData);
 	}
 	
