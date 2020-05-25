@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zoo.cat.core.service.CatApplicationService;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -47,7 +48,9 @@ public class DubboCatApplicationServiceImpl implements CatApplicationService {
 
     @Override
     public String acquireName() {
-        return Optional.ofNullable(applicationConfig).orElse(new ApplicationConfig(buildDefaultApplicationName())).getName();
+        if(Objects.nonNull(applicationConfig) && Objects.nonNull(applicationConfig.getName())) 
+         	return applicationConfig.getName();
+		return new ApplicationConfig(buildDefaultApplicationName()).getName();
     }
 
     private String buildDefaultApplicationName() {
