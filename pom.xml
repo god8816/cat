@@ -82,7 +82,7 @@
         <commons.httpclient.version>3.0.1</commons.httpclient.version>
         <httpclient.version>4.5.1</httpclient.version>
         <okhttp.version>3.7.0</okhttp.version>
-        <gson.verions>2.6.2</gson.verions>
+        <gson.verions>2.8.9</gson.verions>
         <lombok.version>1.16.14</lombok.version>
         <disruptor.version>3.4.0</disruptor.version>
         <hikaricp.version>3.2.0</hikaricp.version>
