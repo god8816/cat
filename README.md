@@ -56,8 +56,6 @@ Cat
   
    Its performance is nearly lossless compared to your RPC framework, its confrim cancel, and its log store is conducted asynchronously using a disruptor.
 
-# QQ Me Support
-  QQ num：948351520
   
  
 
